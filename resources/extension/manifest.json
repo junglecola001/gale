@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Gale Capture",
+  "version": "0.1.0",
+  "description": "把浏览器的下载交给 Gale。",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuKsGiKu0MXH8qk8UEtjXC5G9bj0SJJVvRSap8urgQj6f2F/Uly7PNrAbPWGrBzzVAYGxr6EolUN2Z7j7xp99enfqghifivfM35J2LqA7f7KPvGq+14pa6CZauWunxEwkFINAU1OgQ6rEmQnDG8HvMRqheyDakI/bjxU/e1tKDtNKKAZPTCfHGhkkN/Zyitu9/pqo9CyCNALk1FB8GeUEHUstsBT6JqeVAD/UNP0paYDRooNo6KCLMw0jx+fqmCQkqpRYTMpbv4Qau/VCfOMBfd/hHHbnl8/jYQOgVTKu/cu4IEoYf0imBNKqIWMOslxiMbTYS2svsT1J7Yroa2iAqQIDAQAB",
+  "background": { "service_worker": "background.js" },
+  "action": { "default_title": "Gale Capture" },
+  "permissions": ["downloads", "cookies", "storage", "nativeMessaging", "notifications", "alarms", "tabs"],
+  "host_permissions": ["<all_urls>"],
+  "options_page": "options.html",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

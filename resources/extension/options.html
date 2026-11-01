@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>Gale Capture 设置</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #f6f7f9;
+        --surface: #ffffff;
+        --border: #e2e6ec;
+        --fg: #15181d;
+        --muted: #5b6472;
+        --accent: #2f6fe4;
+        --ok: #12915f;
+        --bad: #c7343f;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0b0c0f;
+          --surface: #111318;
+          --border: #262b34;
+          --fg: #e7eaf0;
+          --muted: #9aa3b2;
+          --accent: #4f8cff;
+          --ok: #35d08a;
+          --bad: #ff5f6d;
+        }
+      }
+      body {
+        margin: 0;
+        padding: 32px;
+        background: var(--bg);
+        color: var(--fg);
+        font:
+          14px/1.5 "Segoe UI Variable Text",
+          "Segoe UI",
+          system-ui,
+          sans-serif;
+      }
+      main {
+        max-width: 560px;
+        margin: 0 auto;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 24px;
+      }
+      h1 {
+        font-size: 18px;
+        margin: 0 0 4px;
+      }
+      p.hint {
+        color: var(--muted);
+        margin: 0 0 20px;
+        font-size: 13px;
+      }
+      label.row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 12px 0;
+        border-top: 1px solid var(--border);
+      }
+      label.row span {
+        flex: 1;
+      }
+      input[type="number"],
+      input[type="text"] {
+        width: 180px;
+        padding: 6px 8px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: var(--bg);
+        color: var(--fg);
+        font: inherit;
+      }
+      button {
+        margin-top: 20px;
+        padding: 8px 16px;
+        border: 0;
+        border-radius: 8px;
+        background: var(--accent);
+        color: #fff;
+        font: inherit;
+        cursor: pointer;
+      }
+      .status {
+        margin-top: 16px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        font-size: 13px;
+      }
+      .ok {
+        color: var(--ok);
+      }
+      .bad {
+        color: var(--bad);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Gale Capture</h1>
+      <p class="hint">把浏览器的下载交给 Gale。改动立即保存。</p>
+
+      <label class="row">
+        <span>启用拦截<small class="hint" style="display: block; margin: 0">关闭后浏览器自己下载。</small></span>
+        <input id="enabled" type="checkbox" />
+      </label>
+      <label class="row">
+        <span>最小文件大小（MB）<small class="hint" style="display: block; margin: 0">更小的文件留给浏览器。</small></span>
+        <input id="minSize" type="number" min="0" step="1" />
+      </label>
+      <label class="row">
+        <span>跳过的扩展名<small class="hint" style="display: block; margin: 0">逗号分隔，例如 exe,msi。</small></span>
+        <input id="skipExt" type="text" />
+      </label>
+
+      <button id="test">测试与 Gale 的连接</button>
+      <div class="status" id="status">尚未测试</div>
+    </main>
+    <script src="options.js"></script>
+  </body>
+</html>
