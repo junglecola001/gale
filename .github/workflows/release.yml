@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Tag to build and publish
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag || github.ref }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install frontend dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build
+        run: bunx mygo build -o release -platform windows/arm64
+
+      - name: Package the portable build
+        shell: pwsh
+        run: |
+          $version = "${{ inputs.tag || github.ref_name }}".TrimStart('v')
+          Compress-Archive -Path 'release/windows-arm64/*' -DestinationPath "release/gale-$version-arm64-portable.zip" -Force
+          Get-ChildItem release -Recurse -File | Select-Object FullName, Length
+
+      - name: Publish the release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = "${{ inputs.tag || github.ref_name }}"
+          $version = $tag.TrimStart('v')
+          gh release view $tag 2>$null
+          if ($LASTEXITCODE -ne 0) {
+            gh release create $tag --target main --title "Gale $version" --generate-notes
+          }
+          gh release upload $tag `
+            "release/windows-arm64/gale-setup-$version-arm64.exe" `
+            "release/gale-$version-arm64-portable.zip" `
+            --clobber
