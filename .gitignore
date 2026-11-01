@@ -1,6 +1,7 @@
 node_modules/
 /dist/
 /build/
+/release/
 /.mygo/
 mygo_windows_*.syso
 *.db
